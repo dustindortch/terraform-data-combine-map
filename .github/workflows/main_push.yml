@@ -1,0 +1,53 @@
+---
+name: Workflow for main branch push
+
+on:
+  push:
+    branches: [ 'main' ]
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  issues: write
+  pull-requests: write
+  contents: read
+
+env:
+  TF_LOG: ERROR
+
+jobs:
+
+  terraform_test_and_apply:
+    name: Validate
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: GitHub Checkout
+      id: gh-checkout
+      uses: actions/checkout@v2
+
+    - name: Terraform Setup
+      id: tf-setup
+      uses: hashicorp/setup-terraform@v2
+
+    - name: Terraform Initialization
+      id: tf-init
+      run: terraform init
+
+    - name: Terraform Format
+      id: tf-fmt
+      run: terraform fmt -check
+
+    - name: Terraform Validate
+      id: tf-validate
+      run: terraform validate
+
+    - name: Terraform Test
+      id: tf-test
+      run: terraform test
+
+    - name: Terraform Apply
+      id: tf-apply
+      run: terraform apply -auto-approve
+
+...

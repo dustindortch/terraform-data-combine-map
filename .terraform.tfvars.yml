@@ -1,0 +1,39 @@
+---
+formatter: "tfvars hcl"
+
+version: ">= 0.16.0, < 1.0.0"
+
+header-from: "main.tf"
+footer-from: ""
+
+recursive:
+  enabled: false
+
+sections:
+  hide: []
+  # show: []
+
+content: ""
+
+output:
+  file: "example.tfvars"
+  mode: "replace"
+  template: |
+    {{ .Content }}
+
+output-values:
+  enabled: false
+  from: ""
+
+sort:
+  enabled: true
+  by: required
+
+settings:
+  default: true
+  description: true
+  indent: 2
+  lockfile: true
+  required: true
+  type: true
+...

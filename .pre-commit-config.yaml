@@ -1,0 +1,39 @@
+---
+repos:
+  - repo: local
+    hooks:
+      - id: terraform_fmt
+        name: terraform fmt -check
+        description: Checks HCL style guidelines
+        entry: /bin/bash -c 'terraform fmt -check'
+        language: script
+        pass_filenames: false
+
+      - id: terraform_validate
+        name: terraform validate
+        description: Checks HCL syntax
+        entry: /bin/bash -c 'terraform validate'
+        language: script
+        pass_filenames: false
+
+      - id: terraform_docs_readme
+        name: terraform-docs -> README.md
+        description: Rewrites README.md in the . directory.
+        entry: /bin/bash -c 'terraform-docs . -c .terraform.docs.yml --output-check=true'
+        language: script
+        pass_filenames: false
+
+      # - id: terraform_docs_tfvars
+      #   name: terraform-docs -> example.tfvars
+      #   description: Creates example.tfvars file from variable inputs.
+      #   entry: /bin/bash -c 'terraform-docs . -c .terraform.tfvars.yml --output-check=true'
+      #   language: script
+      #   pass_filenames: false
+
+      - id: terraform_test
+        name: terraform test
+        description: Runs tests
+        entry: /bin/bash -c 'terraform test'
+        language: script
+        pass_filenames: false
+...
